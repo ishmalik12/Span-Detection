@@ -3,6 +3,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+import pickle
 
 # 🔹 Step 1: Download dataset
 path = "path.csv"
@@ -47,3 +48,5 @@ test_vec = vectorizer.transform(test_email)
 prediction = model.predict(test_vec)
 
 print("\nPrediction:", "Spam" if prediction[0] == 1 else "Not Spam")
+pickle.dump(model, open("model.pkl", "wb"))
+pickle.dump(vectorizer, open("vectorizer.pkl", "wb"))
