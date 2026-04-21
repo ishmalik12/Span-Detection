@@ -8,32 +8,23 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 # 🔹 Step 1: Download dataset
-path = kagglehub.dataset_download("jackksoncsie/spam-email-dataset")
+path = "path.csv"
 
-print("Path to dataset files:", path)
+df = pd.read_csv(path)
 
-# 🔹 Step 2: Get file
-files = os.listdir(path)
-print("Files in dataset:", files)
-
-file_path = os.path.join(path, files[0])
-
-# 🔹 Step 3: Load data
-df = pd.read_csv(file_path)
-
-print("\nFirst rows:\n", df.head())
-print("\nColumns:\n", df.columns)
+# print("\nFirst rows:\n", df.head())
+# print("\nColumns:\n", df.columns)
 
 # 🔹 Step 4: Use correct columns
 df = df[['text', 'spam']]
-df.columns = ['text', 'label']
+df.columns = ['text', 'spam']
 
 # 🔹 Step 5: Ensure labels are numeric
-df['label'] = df['label'].astype(int)
+# df['spam'] = df['spam'].astype(int)
 
 # 🔹 Step 6: Train-test split
 X_train, X_test, y_train, y_test = train_test_split(
-    df['text'], df['label'], test_size=0.2, random_state=42
+    df['text'], df['spam'], test_size=0.2, random_state=42
 )
 
 # 🔹 Step 7: Vectorization
@@ -53,7 +44,7 @@ accuracy = accuracy_score(y_test, y_pred)
 print("\nModel Accuracy:", accuracy)
 
 # 🔹 Step 10: Custom test
-test_email = ["please contact and collect the win amount"]
+test_email = ["hurray, you won a lottery"]
 
 test_vec = vectorizer.transform(test_email)
 prediction = model.predict(test_vec)
