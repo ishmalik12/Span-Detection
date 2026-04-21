@@ -40,7 +40,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 vectorizer = CountVectorizer()
 
 X_train_vec = vectorizer.fit_transform(X_train)
-X_test_vec = vectorizer.transform(X_test)   # ✅ FIXED (was wrong before)
+X_test_vec = vectorizer.transform(X_test) 
 
 # 🔹 Step 8: Train model
 model = MultinomialNB()
