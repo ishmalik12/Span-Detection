@@ -1,6 +1,5 @@
-flask
+fastapi
+uvicorn
 scikit-learn
 numpy
 pandas
-gunicorn
-nltk
