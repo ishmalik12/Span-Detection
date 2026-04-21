@@ -1,7 +1,4 @@
-import kagglehub
 import pandas as pd
-import os
-
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
@@ -20,7 +17,7 @@ df = df[['text', 'spam']]
 df.columns = ['text', 'spam']
 
 # 🔹 Step 5: Ensure labels are numeric
-# df['spam'] = df['spam'].astype(int)
+df['spam'] = df['spam'].astype(int)
 
 # 🔹 Step 6: Train-test split
 X_train, X_test, y_train, y_test = train_test_split(
@@ -44,7 +41,7 @@ accuracy = accuracy_score(y_test, y_pred)
 print("\nModel Accuracy:", accuracy)
 
 # 🔹 Step 10: Custom test
-test_email = ["hurray, you won a lottery"]
+test_email = ["you're selected for the role of AI Engineer"]
 
 test_vec = vectorizer.transform(test_email)
 prediction = model.predict(test_vec)
