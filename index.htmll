@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Spam Detector</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      padding: 40px;
+      border-radius: 20px;
+      width: 400px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+      animation: fadeIn 0.8s ease;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      border-radius: 12px;
+      border: none;
+      padding: 12px;
+      margin-top: 10px;
+      outline: none;
+      resize: none;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #38bdf8;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .spam {
+      color: #ef4444;
+      text-shadow: 0 0 10px #ef4444;
+    }
+
+    .not-spam {
+      color: #22c55e;
+      text-shadow: 0 0 10px #22c55e;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>🚀 AI Spam Detector</h1>
+
+    <textarea id="email" placeholder="Paste email content here..."></textarea>
+
+    <button onclick="checkSpam()">Analyze</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function checkSpam() {
+      const text = document.getElementById("email").value;
+      const resultDiv = document.getElementById("result");
+
+      if (!text) {
+        alert("Enter email text");
+        return;
+      }
+
+      resultDiv.innerText = "Analyzing...";
+      resultDiv.className = "";
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ text: text })
+        });
+
+        const data = await response.json();
+
+        if (data.prediction === "Spam") {
+          resultDiv.innerText = "🚨 Spam Detected";
+          resultDiv.className = "spam";
+        } else {
+          resultDiv.innerText = "✅ Not Spam";
+          resultDiv.className = "not-spam";
+        }
+
+      } catch (error) {
+        resultDiv.innerText = "⚠️ Server Error";
+      }
+    }
+  </script>
+
+</body>
+</html>
