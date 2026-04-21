@@ -10,6 +10,10 @@ vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
 class Email(BaseModel):
     text: str
 
+@app.get("/")
+def home():
+    return {"message": "Spam Classifier API Running 🚀"}
+
 @app.post("/predict")
 def predict(email: Email):
     vec = vectorizer.transform([email.text])
