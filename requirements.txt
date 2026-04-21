@@ -1,4 +1,6 @@
-fastapi
-uvicorn
+flask
 scikit-learn
+numpy
 pandas
+gunicorn
+nltk
